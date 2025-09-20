@@ -1,6 +1,6 @@
 import { Box, Button, Paper, Typography } from "@mui/material";
 import { useAccount } from "../../lib/hooks/useAccount"
-import { loginSchema, LoginSchema } from "../../lib/schemas/loginSchema";
+import { loginSchema } from "../../lib/schemas/loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { LockOpen } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
@@ -10,7 +10,7 @@ import { Link, useLocation, useNavigate } from "react-router";
 export default function LoginForm() {
 
     const { loginUser } = useAccount();
-    const { control, handleSubmit, formState: { isValid, isSubmitting } } = useForm<LoginSchema>({
+    const { control, handleSubmit, formState: { isValid, isSubmitting } } = useForm<loginSchema>({
         mode: 'onTouched',
         resolver: zodResolver(loginSchema),
         defaultValues: {
@@ -22,11 +22,14 @@ export default function LoginForm() {
     const location = useLocation();
 
     const onSubmit = async (data: loginSchema) => {
-        await loginUser.mutateAsync(data, {
-            onSuccess: () => {
-                navigate(location.state?.from || '/activities');
-            }
-        });
+        // await loginUser.mutateAsync(data, {
+        //     onSuccess: () => {
+        //         navigate(location.state?.from || '/activities');
+        //     }
+        //  })
+        await loginUser.mutateAsync(data);
+        const to = (location.state)?.from ?? '/activities';
+        navigate(to, { replace: true });
     }
     return (
         <Paper component='form'
