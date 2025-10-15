@@ -4,7 +4,7 @@ using Application.Activities.Profiles.DTOs;
 using Application.Profiles.DTOs;
 using AutoMapper;
 using Domain;
-using SQLitePCL;
+
 
 namespace Application.Core;
 
@@ -41,4 +41,4 @@ public class MappingProfiles : Profile
 
         CreateMap<Activity, UserActivityDto>();
     }
-} 
+}

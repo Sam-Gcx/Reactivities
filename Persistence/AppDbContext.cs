@@ -16,7 +16,7 @@ public class AppDbContext(DbContextOptions options) : IdentityDbContext<User>(op
 
     public required DbSet<Comment> Comments { get; set; }
 
-    public required DbSet<UserFollowing> UserFollowings{ get; set; }
+    public required DbSet<UserFollowing> UserFollowings { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -42,11 +42,11 @@ public class AppDbContext(DbContextOptions options) : IdentityDbContext<User>(op
                 .WithMany(f => f.Followings)
                 .HasForeignKey(o => o.ObserverId)
                 .OnDelete(DeleteBehavior.Cascade);
-            
+
             x.HasOne(o => o.Target)
                 .WithMany(f => f.Followers)
                 .HasForeignKey(o => o.TargetId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
         });
 
         var dateTimeConverter = new ValueConverter<DateTime, DateTime>(

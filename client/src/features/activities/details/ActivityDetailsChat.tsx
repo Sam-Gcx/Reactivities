@@ -6,10 +6,10 @@ import { useForm, type FieldValues } from "react-hook-form";
 import { observer } from "mobx-react-lite";
 
 
-const ActivityDetailsChat = observer( function ActivityDetailsChat() {
+const ActivityDetailsChat = observer(function ActivityDetailsChat() {
     const { id } = useParams();
     const { commentStore } = useComments(id);
-    const { register, handleSubmit, reset, formState:{isSubmitting}} = useForm();
+    const { register, handleSubmit, reset, formState: { isSubmitting } } = useForm();
 
     const addComment = async (data: FieldValues) => {
         try {
@@ -23,13 +23,13 @@ const ActivityDetailsChat = observer( function ActivityDetailsChat() {
         }
     }
 
-    const handleKeyPress = (event:React.KeyboardEvent<HTMLDivElement>) => {
-        if(event.key === 'Enter' && event.shiftKey){
+    const handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault();
             handleSubmit(addComment)();
         }
     }
-    
+
     return (
         <>
             <Box
@@ -47,18 +47,18 @@ const ActivityDetailsChat = observer( function ActivityDetailsChat() {
                     <div>
                         <form>
                             <TextField
-                                {...register('body', {required: true})}
+                                {...register('body', { required: true })}
                                 variant="outlined"
                                 fullWidth
                                 multiline
                                 rows={2}
-                                placeholder="Enter your comment (Enter to submit, SHIFT + Enter for new line)"
+                                placeholder="Enter your comment (Enter for new line, SHIFT + Enter to submit)"
                                 onKeyDown={handleKeyPress}
                                 slotProps={{
                                     input: {
-                                        endAdornment: isSubmitting?(
-                                            <CircularProgress size={24}/>
-                                        ): null
+                                        endAdornment: isSubmitting ? (
+                                            <CircularProgress size={24} />
+                                        ) : null
                                     }
                                 }}
                             />

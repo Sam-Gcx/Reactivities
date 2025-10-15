@@ -16,39 +16,35 @@ export default function ActivityForm() {
     const { control, reset, handleSubmit } = useForm<ActivitySchema>({
         mode: 'onTouched',
         resolver: zodResolver(activitySchema),
-        defaultValues: {
-            title: '',
-            description: '',
-            category: '',
-        }
     });
+    const navigate = useNavigate();
     const { id } = useParams();
     const { updateActivity, createActivity, activity, isLoadingActivity } = useActivities(id);
-    const navigate=useNavigate();
+
 
     useEffect(() => {
         if (activity) reset({
             ...activity,
-            location:{
-                city:activity.city,
-                venue:activity.venue,
-                latitude:activity.latitude,
-                longitude:activity.longitude
+            location: {
+                city: activity.city,
+                venue: activity.venue,
+                latitude: activity.latitude,
+                longitude: activity.longitude
             }
         });
     }, [activity, reset])
 
     const onSubmit = async (data: ActivitySchema) => {
-        const{location, ...rest} =data;
-        const flattenedData={...rest, ...location};
+        const { location, ...rest } = data;
+        const flattenedData = { ...rest, ...location };
         try {
-            if(activity){
-                updateActivity.mutate({...activity,...flattenedData}, {
-                    onSuccess:()=>navigate(`/activities/${activity.id}`)
+            if (activity) {
+                updateActivity.mutate({ ...activity, ...flattenedData }, {
+                    onSuccess: () => navigate(`/activities/${activity.id}`)
                 })
-            } else{
-                createActivity.mutate(flattenedData,{
-                    onSuccess:(id)=>navigate(`/activities/${id}`)
+            } else {
+                createActivity.mutate(flattenedData, {
+                    onSuccess: (id) => navigate(`/activities/${id}`)
                 })
             }
         } catch (error) {
@@ -76,7 +72,7 @@ export default function ActivityForm() {
 
                 <LocationInput control={control} label='Enter the location' name="location" />
                 <Box display='flex' justifyContent='end' gap={3}>
-                    <Button color='inherit'>Cancel</Button>
+                    <Button onClick={()=> navigate(-1)} color='inherit'>Cancel</Button>
                     <Button type="submit" color='success' variant="contained" disabled={updateActivity.isPending || createActivity.isPending}>Submit</Button>
                 </Box>
             </Box>

@@ -6,20 +6,20 @@ import Cropper, { type ReactCropperElement } from "react-cropper";
 import "cropperjs/dist/cropper.css";
 
 
-type Props={
-    uploadPhoto:(file:Blob) => void
-    loading:boolean
+type Props = {
+    uploadPhoto: (file: Blob) => void
+    loading: boolean
 }
 
-export default function PhotoUploadWidget({uploadPhoto, loading}: Props) {
+export default function PhotoUploadWidget({ uploadPhoto, loading }: Props) {
     const [files, setFiles] = useState<object & { preview: string; }[]>([]);
     const cropperRef = useRef<ReactCropperElement>(null);
 
-    useEffect(()=>{
-        return()=>{
-            files.forEach (file=>URL.revokeObjectURL(file.preview))
+    useEffect(() => {
+        return () => {
+            files.forEach(file => URL.revokeObjectURL(file.preview))
         }
-    },[files])
+    }, [files])
 
     const onDrop = useCallback((acceptedFiles: File[]) => {
         setFiles(acceptedFiles.map(file => Object.assign(file, {
@@ -27,9 +27,9 @@ export default function PhotoUploadWidget({uploadPhoto, loading}: Props) {
         })))
     }, []);
 
-    const onCrop = useCallback(()=>{
+    const onCrop = useCallback(() => {
         const cropper = cropperRef.current?.cropper;
-        cropper?.getCroppedCanvas().toBlob(blob=>{
+        cropper?.getCroppedCanvas().toBlob(blob => {
             uploadPhoto(blob as Blob)
         })
     }, [uploadPhoto])
@@ -70,7 +70,7 @@ export default function PhotoUploadWidget({uploadPhoto, loading}: Props) {
                     />}
             </Grid2>
             <Grid2 size={4}>
-                {files[0].preview && (
+                {files[0]?.preview && (
                     <>
                         <Typography variant="overline" color="secondary">Step 1 - Preview & upload</Typography>
                         <div
@@ -78,7 +78,7 @@ export default function PhotoUploadWidget({uploadPhoto, loading}: Props) {
                             style={{ width: 300, height: 300, overflow: 'hidden' }}
                         />
 
-                        <Button sx={{my:1, width:300}} onClick={onCrop} variant="contained" color='secondary' disabled={loading}>
+                        <Button sx={{ my: 1, width: 300 }} onClick={onCrop} variant="contained" color='secondary' disabled={loading}>
                             Upload
                         </Button>
                     </>

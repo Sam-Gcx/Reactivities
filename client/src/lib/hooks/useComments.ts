@@ -44,7 +44,7 @@ export const useComments = (activityId?: string) => {
 
     useEffect(()=>{
         if(activityId && !created.current){
-            commentStore.createHubConnection(activityId)
+            commentStore.createHubConnection(activityId);
             created.current = true
         }
 

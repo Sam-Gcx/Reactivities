@@ -16,7 +16,7 @@ public class GetFollowings
     {
         public string Predicate { get; set; } = "followers";
 
-        public string UserId { get; set; }
+        public required string UserId { get; set; }
     }
 
     public class Handler(AppDbContext context, IMapper mapper, IUserAccessor userAccessor) : IRequestHandler<Query, Result<List<UserProfile>>>
@@ -30,13 +30,13 @@ public class GetFollowings
                 case "followers":
                     profiles = await context.UserFollowings.Where(x => x.TargetId == request.UserId)
                         .Select(x => x.Observer)
-                        .ProjectTo<UserProfile>(mapper.ConfigurationProvider, new{currentUserId = userAccessor.GetUserId()})
+                        .ProjectTo<UserProfile>(mapper.ConfigurationProvider, new { currentUserId = userAccessor.GetUserId() })
                         .ToListAsync(cancellationToken);
                     break;
                 case "followings":
                     profiles = await context.UserFollowings.Where(x => x.ObserverId == request.UserId)
                         .Select(x => x.Target)
-                        .ProjectTo<UserProfile>(mapper.ConfigurationProvider, new{currentUserId = userAccessor.GetUserId()})
+                        .ProjectTo<UserProfile>(mapper.ConfigurationProvider, new { currentUserId = userAccessor.GetUserId() })
                         .ToListAsync(cancellationToken);
                     break;
             }
