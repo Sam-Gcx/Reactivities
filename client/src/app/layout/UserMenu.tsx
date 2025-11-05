@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
 import { useAccount } from '../../lib/hooks/useAccount';
 import { Box, Avatar, Divider, ListItemIcon, ListItemText } from '@mui/material';
-import { Add, Person, Logout } from '@mui/icons-material';
+import { Add, Person, Logout, Password } from '@mui/icons-material';
 import { Link } from 'react-router';
 
 export default function UserMenu() {
@@ -54,6 +54,12 @@ export default function UserMenu() {
                 <Person />
             </ListItemIcon>
             <ListItemText>My Profile</ListItemText>
+        </MenuItem>
+        <MenuItem component={Link} to={'/change-password'} onClick={handleClose}>
+            <ListItemIcon>
+                <Password />
+            </ListItemIcon>
+            <ListItemText>Change password</ListItemText>
         </MenuItem>
         <Divider/>
         <MenuItem onClick={()=>{
