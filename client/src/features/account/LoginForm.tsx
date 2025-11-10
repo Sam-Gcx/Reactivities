@@ -50,7 +50,7 @@ export default function LoginForm() {
         const clientId = import.meta.env.VITE_GITHUB_CLIENT_ID;
         const redirectUrl = import.meta.env.VITE_REDIRECT_URL;
         window.location.href =
-            `https://github.com/login/oauth/authorize?client_id=${clientId}&redirectUri=${redirectUrl}&scope=read:user user:email`
+            `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}&scope=read:user user:email`
     }
 
     return (
