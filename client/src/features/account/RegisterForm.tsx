@@ -55,7 +55,7 @@ export default function RegisterForm() {
                         <Typography variant="h4">Register</Typography>
                     </Box>
                     <TextInput label='Email' control={control} name='email' />
-                    <TextInput label='Display' type='password' control={control} name='displayName' />
+                    <TextInput label='Display name' control={control} name='displayName' />
                     <TextInput label='Password' type='password' control={control} name='password' />
                     <Button type='submit' disabled={!isValid || isSubmitting} variant="contained" size="large">
                         Register

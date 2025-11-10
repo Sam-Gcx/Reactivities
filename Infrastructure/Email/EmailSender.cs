@@ -24,7 +24,7 @@ public class EmailSender(IResend resend, IConfiguration config) : IEmailSender<U
     {
         var message = new EmailMessage
         {
-            From = "whatever@resend.dev",
+            From = "no-reply@resend.dev",
             Subject = subject,
             HtmlBody = body
         };
